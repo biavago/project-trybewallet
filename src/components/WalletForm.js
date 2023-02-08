@@ -1,15 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { fetchAPI } from '../redux/actions';
+import { fetchAPI, addExpenses } from '../redux/actions';
 
 class WalletForm extends React.Component {
   state = {
+    id: 0,
     value: '',
     description: '',
-    currency: '',
-    paymentMethod: '',
-    tag: '',
+    currency: 'USD',
+    method: 'Dinheiro',
+    tag: 'Alimentação',
   };
 
   async componentDidMount() {
@@ -26,8 +27,29 @@ class WalletForm extends React.Component {
     );
   };
 
+  handleClick = async () => {
+    const { dispatch } = this.props;
+    const response = await fetch('https://economia.awesomeapi.com.br/json/all');
+    const data = await response.json();
+    delete data.USDT;
+    const { id } = this.state;
+    this.setState({
+      exchangeRates: data,
+    }, async () => {
+      await dispatch(addExpenses(this.state));
+      this.setState({
+        id: id + 1,
+        value: '',
+        description: '',
+        currency: 'USD',
+        method: 'Dinheiro',
+        tag: 'Alimentação',
+      });
+    });
+  };
+
   render() {
-    const { value, description, currency, paymentMethod, tag } = this.state;
+    const { value, description, currency, method, tag } = this.state;
     const { currencies } = this.props;
     return (
       <div>
@@ -71,13 +93,13 @@ class WalletForm extends React.Component {
             }
           </select>
         </label>
-        <label htmlFor="paymentMethod">
+        <label htmlFor="method">
           Método de Pagamento:
           <select
             data-testid="method-input"
-            name="paymentMethod"
+            name="method"
             onChange={ this.handleChange }
-            value={ paymentMethod }
+            value={ method }
           >
             <option>Dinheiro</option>
             <option>Cartão de crédito</option>
@@ -99,6 +121,12 @@ class WalletForm extends React.Component {
             <option>Saúde</option>
           </select>
         </label>
+        <button
+          type="button"
+          onClick={ this.handleClick }
+        >
+          Adicionar despesa
+        </button>
       </div>
     );
   }
