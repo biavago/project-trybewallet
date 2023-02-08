@@ -23,7 +23,7 @@ class Header extends React.Component {
           { email }
         </h2>
         <h3 data-testid="total-field">
-          { this.updateExpenses() ? this.updateExpenses().toFixed(2) : 0 }
+          { this.updateExpenses() ? this.updateExpenses().toFixed(2) : '0.00' }
         </h3>
         <h3 data-testid="header-currency-field"> BRL</h3>
       </div>
