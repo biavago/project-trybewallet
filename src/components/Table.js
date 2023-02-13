@@ -4,15 +4,8 @@ import { connect } from 'react-redux';
 import { deleteExpenses } from '../redux/actions';
 
 class Table extends Component {
-  handleDelete = (id) => {
-    const { expenses, dispatch } = this.props;
-    const expensesToBeDeleted = expenses.filter((expense) => (
-      expense.id !== id));
-    dispatch(deleteExpenses(expensesToBeDeleted));
-  };
-
   render() {
-    const { expenses } = this.props;
+    const { expenses, dispatch } = this.props;
     return (
       <table>
         <thead>
@@ -52,17 +45,8 @@ class Table extends Component {
               </td>
               <td>
                 <button
-                  data-testid="edit-btn"
-                  type="button"
-                  // onClick=
-                >
-                  Editar
-                </button>
-              </td>
-              <td>
-                <button
                   data-testid="delete-btn"
-                  onClick={ () => this.handleDelete(expense.id) }
+                  onClick={ () => dispatch(deleteExpenses(expense.id)) }
                   type="button"
                 >
                   Excluir
