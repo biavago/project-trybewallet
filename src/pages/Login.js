@@ -41,6 +41,7 @@ class Login extends React.Component {
     const { isDisabled } = this.state;
     return (
       <div>
+        <h1>Login</h1>
         <input
           data-testid="email-input"
           name="email"

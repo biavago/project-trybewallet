@@ -19,7 +19,6 @@ class Header extends React.Component {
       <div>
         <h1>$ TrybeWallet $</h1>
         <h2 data-testid="email-field">
-          Usuário:
           { email }
         </h2>
         <h3 data-testid="total-field">

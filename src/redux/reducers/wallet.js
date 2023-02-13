@@ -1,4 +1,6 @@
-import { ADD_EXPENSES, DELETE_EXPENSES, SAVE_CURRENCIES } from '../actions';
+import {
+  ADD_EXPENSES, DELETE_EXPENSES,
+  EDIT_EXPENSES, SAVE_CURRENCIES } from '../actions';
 
 const INITIAL_STATE = {
   currencies: [],
@@ -24,6 +26,10 @@ const walletReducer = (state = INITIAL_STATE, action) => {
     return {
       ...state,
       expenses: action.payload,
+    };
+  case EDIT_EXPENSES:
+    return {
+
     };
   default:
     return state;
